@@ -15,22 +15,22 @@
  * @param {number} y The starting y location.
  * @param {number} speed The starting speed (px/sec).
  */
-var Enemy = function(x,y,speed) {
+var Enemy = function(x, y, speed) {
 
-  /** @member {number} Enemy#x
-      @description The x location. */
+  /** The x location.
+      @type {number} */
   this.x = x;
 
-  /** @member {number} Enemy#y
-      @description The y location. */
+  /** The y location.
+      @type {number} */
   this.y = y;
 
-  /** @member {number} Enemy#speed
-      @description The speed in px/sec. */
+  /** The speed in px/sec.
+      @type {number} */
   this.speed = speed;
 
-  /** @member {number} Enemy#sprite
-      @description The URL to the sprite graphic */
+  /** The URL to the sprite graphic
+      @type {string} */
   this.sprite = 'images/enemy-bug.png';
 };
 
@@ -39,7 +39,7 @@ var Enemy = function(x,y,speed) {
  * [x, y, width, height]
  * @type {Array.<number>}
  */
-Enemy.prototype.HIT_AREA_RECT = [0,81,101,83];
+Enemy.prototype.HIT_AREA_RECT = [0, 81, 101, 83];
 
 /**
  * Updates the position.
@@ -109,7 +109,7 @@ Enemy.prototype.collidedWithPlayer = function() {
                     bottomBounds <= playerBottomBounds);
 
   return collisionX && collisionY;
-}
+};
 
 
 /* Player */
@@ -122,32 +122,32 @@ Enemy.prototype.collidedWithPlayer = function() {
  */
 var Player = function(x,y) {
 
-  /** @member {number} Player#x
-      @description The x location. */
+  /** The x location.
+      @type {number} */
   this.x = x;
 
-  /** @member {number} Player#y
-      @description The y location. */
+  /** The y location.
+      @type {number} */
   this.y = y;
 
-  /** @member {number} Player#startX
-      @description The starting x location. Used to reset. */
+  /** The starting x location. Used to reset.
+      @type {number} */
   this.startX = x;
 
-  /** @member {number} Player#startY
-      @description The starting y location. Used to reset. */
+  /** The starting y location. Used to reset.
+      @type {number} */
   this.startY = y;
 
-  /** @member {number} Player#goalX
-      @description The x location the player is going to. */
+  /** The x location the player is going to.
+      @type {number} */
   this.goalX = x;
 
-  /** @member {number} Player#goalY
-      @description The y location the player is going to. */
+  /** The y location the player is going to.
+      @type {number} */
   this.goalY = y;
 
-  /** @member {string} Player#sprite
-      @description The URL for the sprite asset. */
+  /** The URL for the sprite asset.
+      @type {string} */
   this.sprite = 'images/char-boy.png';
 };
 
@@ -156,7 +156,7 @@ var Player = function(x,y) {
  * [x, y, width, height]
  * @type {Array.<number>}
  */
-Player.prototype.HIT_AREA_RECT = [0,81,101,83];
+Player.prototype.HIT_AREA_RECT = [0, 81, 101, 83];
 
 /**
  * Updates the location of the player.
@@ -277,22 +277,22 @@ Player.prototype.isInTheWater = function() {
  */
 var GameStateController = function(enemyCount, maxSpeed, minSpeed) {
 
-  /** @member {number} GameStateController#level
-      @description The current level of the game. */
+  /** The current level of the game.
+      @type {number} */
   this.level = 1;
 
-  /** @member {number} GameStateController#enemyCount
-      @description The number of enemies currently on the board. */
+  /** The number of enemies currently on the board.
+      @type {number} */
   this.enemyCount = enemyCount;
 
-  /** @member {number} GameStateController#maxSpeed
-      @description The maximum speed for the enemy's randomized speed calc. */
+  /** The maximum speed for the enemy's randomized speed calc.
+      @type {number} */
   this.maxSpeed = maxSpeed;
 
-  /** @member {number} GameStateController#minSpeed
-      @description The minimum speed the enemy's randomized speed calc. */
+  /** The minimum speed the enemy's randomized speed calc.
+      @type {number} */
   this.minSpeed = minSpeed;
-}
+};
 
 /**
  * Removes all the enemies.
@@ -318,7 +318,7 @@ GameStateController.prototype.generateEnemies = function() {
     var rowNum = i - rowGroupCount * endRow;
 
     // If we've reached the end of the group, increment the row set counter.
-    if (i % endRow == 0) rowGroupCount++;
+    if (i % endRow === 0) rowGroupCount++;
 
     var startY = rowNum * rowHeight + characterVertOffset;
     var speed = Math.random() * (this.maxSpeed - this.minSpeed) + this.minSpeed;
@@ -335,13 +335,13 @@ GameStateController.prototype.levelUp = function() {
   console.log("level ", this.level);
 
   // Increase enemy count every five levels.
-  if (this.level % 5 == 0) {
+  if (this.level % 5 === 0) {
     console.log(this.level, 'increasing enemy count');
     this.enemyCount++;
   }
 
   // Increase enemy count every two levels.
-  if (this.level % 2 == 0) {
+  if (this.level % 2 === 0) {
     console.log(this.level, 'increasing speed');
     this.maxSpeed += 10;
     this.minSpeed += 5;
