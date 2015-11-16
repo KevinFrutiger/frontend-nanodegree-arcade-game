@@ -369,6 +369,8 @@ Gem.prototype.constructor = Gem;
  */
 var Heart = function(x, y) {
   Treat.call(this, x, y);
+
+  this.sprite = 'images/heart.png';
 };
 
 Heart.prototype = Object.create(Treat.prototype);
