@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Enemy</title>
+    <title>JSDoc: Class: Treat</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Enemy</h1>
+    <h1 class="page-title">Class: Treat</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-        Enemy
+        Treat
         </h2>
         
     
@@ -42,14 +42,14 @@
 
     
 
-    <h4 class="name" id="Enemy"><span class="type-signature"></span>new Enemy<span class="signature">(x, y, speed)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Treat"><span class="type-signature"></span>new Treat<span class="signature">(x, y)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Creates a new Enemy.
+    Creates a new Treat object. A treat is anything the player collects.
 </div>
 
 
@@ -101,7 +101,7 @@
 
             
 
-            <td class="description last">The starting x location.</td>
+            <td class="description last">The x location.</td>
         </tr>
 
     
@@ -124,30 +124,7 @@
 
             
 
-            <td class="description last">The starting y location.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>speed</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The starting speed (px/sec).</td>
+            <td class="description last">The y location.</td>
         </tr>
 
     
@@ -188,7 +165,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line18">line 18</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line272">line 272</a>
     </li></ul></dd>
     
 
@@ -286,79 +263,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="speed"><span class="type-signature"></span>speed<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    The speed in px/sec.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line30">line 30</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line292">line 292</a>
     </li></ul></dd>
     
 
@@ -382,7 +287,7 @@
 
 
 <div class="description">
-    The URL to the sprite graphic.
+    The URL for the graphic.
 </div>
 
 
@@ -430,7 +335,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line34">line 34</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line284">line 284</a>
     </li></ul></dd>
     
 
@@ -502,7 +407,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line22">line 22</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -574,7 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line26">line 26</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line280">line 280</a>
     </li></ul></dd>
     
 
@@ -608,7 +513,7 @@
 
 
 <div class="description">
-    Returns whether the enemy's hit bounds interesect with the player's hitbounds, as defined by their HIT_RECT_AREA property.
+    Returns whether the treat's hit bounds intersect with the player's hitbounds, as defined by their HIT_RECT_AREA properties.
 </div>
 
 
@@ -652,7 +557,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line93">line 93</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -679,111 +584,7 @@
 
         
 <div class="param-desc">
-    Whether this enemy and the player's hit areas intersect.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="isOffStage"><span class="type-signature"></span>isOffStage<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Returns whether the enemy moved off the stage.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line84">line 84</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Whether the enemy is off the stage.
+    Whether this treat and the player's hit areas intersect.
 </div>
 
 
@@ -816,7 +617,7 @@
 
 
 <div class="description">
-    Draws the enemy on the canvas.
+    Draws the treat on the canvas.
 </div>
 
 
@@ -860,7 +661,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line65">line 65</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line306">line 306</a>
     </li></ul></dd>
     
 
@@ -891,14 +692,14 @@
 
     
 
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(dt)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Updates the position.
+    Updates the treat.
 </div>
 
 
@@ -907,55 +708,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Time delta between browser animation frames.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -991,7 +743,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line48">line 48</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line297">line 297</a>
     </li></ul></dd>
     
 

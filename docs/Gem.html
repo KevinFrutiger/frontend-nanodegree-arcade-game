@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Enemy</title>
+    <title>JSDoc: Class: Gem</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Enemy</h1>
+    <h1 class="page-title">Class: Gem</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-        Enemy
+        Gem
         </h2>
         
     
@@ -42,14 +42,14 @@
 
     
 
-    <h4 class="name" id="Enemy"><span class="type-signature"></span>new Enemy<span class="signature">(x, y, speed)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Gem"><span class="type-signature"></span>new Gem<span class="signature">(x, y, color<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Creates a new Enemy.
+    Creates a new Gem objec.
 </div>
 
 
@@ -73,7 +73,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -98,10 +102,22 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">The starting x location.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The x location.</td>
         </tr>
 
     
@@ -121,33 +137,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">The starting y location.</td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The y location.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>speed</code></td>
+                <td class="name"><code>color</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last">The starting speed (px/sec).</td>
+            
+                <td class="default">
+                
+                    blue
+                
+                </td>
+            
+
+            <td class="description last">The color of the gem. This should match a    suffix in a PNG in images/. ex. 'orange' for gem-orange.png.</td>
         </tr>
 
     
@@ -188,7 +232,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line18">line 18</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line352">line 352</a>
     </li></ul></dd>
     
 
@@ -213,9 +257,25 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>var gem = new Gem(10, 20, 'orange'); // Creates an orange gem.</code></pre>
+
+
 
     
     </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Treat.html">Treat</a></li>
+    </ul>
+
 
     
 
@@ -264,29 +324,9 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line42">line 42</a>
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#HIT_AREA_RECT">Treat#HIT_AREA_RECT</a>
     </li></ul></dd>
     
 
@@ -295,53 +335,6 @@
     
 
     
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="speed"><span class="type-signature"></span>speed<span class="type-signature"> :number</span></h4>
-
-
-
-
-<div class="description">
-    The speed in px/sec.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">number</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     
 
@@ -358,7 +351,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line30">line 30</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line292">line 292</a>
     </li></ul></dd>
     
 
@@ -382,7 +375,7 @@
 
 
 <div class="description">
-    The URL to the sprite graphic.
+    The URL for the graphic.
 </div>
 
 
@@ -410,6 +403,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Treat.html#sprite">Treat#sprite</a>
+    </li></ul></dd>
+    
 
     
 
@@ -430,7 +428,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line34">line 34</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line284">line 284</a>
     </li></ul></dd>
     
 
@@ -480,6 +478,11 @@
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#x">Treat#x</a>
+    </li></ul></dd>
+    
 
     
 
@@ -502,7 +505,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line22">line 22</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line276">line 276</a>
     </li></ul></dd>
     
 
@@ -552,6 +555,11 @@
     
 
     
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#y">Treat#y</a>
+    </li></ul></dd>
+    
 
     
 
@@ -574,7 +582,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line26">line 26</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line280">line 280</a>
     </li></ul></dd>
     
 
@@ -608,7 +616,7 @@
 
 
 <div class="description">
-    Returns whether the enemy's hit bounds interesect with the player's hitbounds, as defined by their HIT_RECT_AREA property.
+    Returns whether the treat's hit bounds intersect with the player's hitbounds, as defined by their HIT_RECT_AREA properties.
 </div>
 
 
@@ -629,6 +637,11 @@
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#collidedWithPlayer">Treat#collidedWithPlayer</a>
+    </li></ul></dd>
     
 
     
@@ -652,7 +665,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line93">line 93</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -679,111 +692,7 @@
 
         
 <div class="param-desc">
-    Whether this enemy and the player's hit areas intersect.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">boolean</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="isOffStage"><span class="type-signature"></span>isOffStage<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-
-
-
-<div class="description">
-    Returns whether the enemy moved off the stage.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line84">line 84</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Whether the enemy is off the stage.
+    Whether this treat and the player's hit areas intersect.
 </div>
 
 
@@ -816,7 +725,7 @@
 
 
 <div class="description">
-    Draws the enemy on the canvas.
+    Draws the treat on the canvas.
 </div>
 
 
@@ -837,6 +746,11 @@
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#render">Treat#render</a>
+    </li></ul></dd>
     
 
     
@@ -860,7 +774,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line65">line 65</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line306">line 306</a>
     </li></ul></dd>
     
 
@@ -891,14 +805,14 @@
 
     
 
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(dt)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Updates the position.
+    Updates the treat.
 </div>
 
 
@@ -907,55 +821,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Time delta between browser animation frames.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -968,6 +833,11 @@
 
     
 
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Treat.html#update">Treat#update</a>
+    </li></ul></dd>
     
 
     
@@ -991,7 +861,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line48">line 48</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line297">line 297</a>
     </li></ul></dd>
     
 
