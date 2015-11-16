@@ -377,8 +377,6 @@ Heart.prototype = Object.create(Treat.prototype);
 Heart.prototype.constructor = Heart;
 
 
-
-
 /* Game State Controller */
 
 /**
@@ -483,12 +481,37 @@ GameStateController.prototype.generateTreats = function() {
                                 return a[0] - b[0];
                                });
 
+  var treatTypes = ['blue', 'green', 'orange', 'heart'];
+
   // Create all the treats.
   for (i = 0; i < indexPairs.length; i++) {
     var x = columns[indexPairs[i][1]];
     var y = rows[indexPairs[i][0]];
 
-    allTreats.push(new Gem(x, y, 'green'));
+    var treatIndex = Math.round(Math.random() * (treatTypes.length - 1));
+    var treatType = treatTypes[treatIndex];
+
+    switch(treatType) {
+      case 'blue':
+        allTreats.push(new Gem(x, y, 'blue'));
+        break;
+
+      case 'green':
+        allTreats.push(new Gem(x, y, 'green'));
+        break;
+
+      case 'orange':
+        allTreats.push(new Gem(x, y, 'orange'));
+        break;
+
+      case 'heart':
+        allTreats.push(new Heart(x, y));
+        break;
+
+      default:
+        console.warn('Something went wrong selecting treat with ' + treatType);
+    }
+
   }
 };
 
