@@ -1,7 +1,7 @@
 /**
  * @fileoverview Generates the player and enemies, and keeps track of the
  *     level and other game state information.
- * @author Udacity
+ * @author unknown at Udacity
  * @author Kevin Frutiger <webmessage@frutigergroup.com>
  */
 
@@ -29,7 +29,7 @@ var Enemy = function(x, y, speed) {
       @type {number} */
   this.speed = speed;
 
-  /** The URL to the sprite graphic
+  /** The URL to the sprite graphic.
       @type {string} */
   this.sprite = 'images/enemy-bug.png';
 };
@@ -39,7 +39,7 @@ var Enemy = function(x, y, speed) {
  * [x, y, width, height]
  * @type {Array.<number>}
  */
-Enemy.prototype.HIT_AREA_RECT = [0, 81, 101, 83];
+Enemy.prototype.HIT_AREA_RECT = [1, 81, 99, 83];
 
 /**
  * Updates the position.
@@ -66,13 +66,15 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  // ctx.strokeStyle = 'black';
-  // ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
-  // ctx.strokeStyle = 'red';
-  // ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
-  //                this.y + this.HIT_AREA_RECT[1],
-  //                this.HIT_AREA_RECT[2],
-  //                this.HIT_AREA_RECT[3]);
+  if (showBoundaries) {
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
+                   this.y + this.HIT_AREA_RECT[1],
+                   this.HIT_AREA_RECT[2],
+                   this.HIT_AREA_RECT[3]);
+  }
 };
 
 /**
@@ -86,29 +88,20 @@ Enemy.prototype.isOffStage = function() {
 /**
  * Returns whether the enemy's hit bounds interesect with the player's hit
  * bounds, as defined by their HIT_RECT_AREA property.
- * @returns {boolean} Whether this enemy and the player's hit areas interesect.
+ * @returns {boolean} Whether this enemy and the player's hit areas intersect.
  */
 Enemy.prototype.collidedWithPlayer = function() {
-  var leftBounds = this.x + this.HIT_AREA_RECT[0];
-  var rightBounds = this.x + this.HIT_AREA_RECT[2];
-  var topBounds = this.y + this.HIT_AREA_RECT[1];
-  var bottomBounds = this.y + this.HIT_AREA_RECT[3];
-  var playerLeftBounds = player.x + player.HIT_AREA_RECT[0];
-  var playerRightBounds = player.x + player.HIT_AREA_RECT[2];
-  var playerTopBounds = player.y + player.HIT_AREA_RECT[1];
-  var playerBottomBounds = player.y + player.HIT_AREA_RECT[3];
+  var left = this.x + this.HIT_AREA_RECT[0];
+  var right = this.x + this.HIT_AREA_RECT[2];
+  var top = this.y + this.HIT_AREA_RECT[1];
+  var bottom = this.y + this.HIT_AREA_RECT[3];
+  var playerLeft = player.x + player.HIT_AREA_RECT[0];
+  var playerRight = player.x + player.HIT_AREA_RECT[2];
+  var playerTop = player.y + player.HIT_AREA_RECT[1];
+  var playerBottom = player.y + player.HIT_AREA_RECT[3];
 
-  var collisionX = (rightBounds >= playerLeftBounds &&
-                    rightBounds <= playerRightBounds) ||
-                   (leftBounds >= playerLeftBounds &&
-                    leftBounds <= playerRightBounds);
-
-  var collisionY = (topBounds >= playerTopBounds &&
-                    topBounds <= playerBottomBounds) ||
-                   (bottomBounds >= playerTopBounds &&
-                    bottomBounds <= playerBottomBounds);
-
-  return collisionX && collisionY;
+  return (right >= playerLeft && left <= playerRight) &&
+         (top <= playerBottom && bottom >= playerTop);
 };
 
 
@@ -156,7 +149,7 @@ var Player = function(x,y) {
  * [x, y, width, height]
  * @type {Array.<number>}
  */
-Player.prototype.HIT_AREA_RECT = [0, 81, 101, 83];
+Player.prototype.HIT_AREA_RECT = [10, 81, 81, 83];
 
 /**
  * Updates the location of the player.
@@ -191,13 +184,15 @@ Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  // ctx.strokeStyle = 'black';
-  // ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
-  // ctx.strokeStyle = 'red';
-  // ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
-  //                this.y + this.HIT_AREA_RECT[1],
-  //                this.HIT_AREA_RECT[2],
-  //                this.HIT_AREA_RECT[3]);
+  if (showBoundaries) {
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
+                   this.y + this.HIT_AREA_RECT[1],
+                   this.HIT_AREA_RECT[2],
+                   this.HIT_AREA_RECT[3]);
+  }
 };
 
 /**
@@ -266,6 +261,122 @@ Player.prototype.isInTheWater = function() {
 };
 
 
+/*  Treat and Treat subclasses  */
+
+/**
+ * Creates a new Treat object. A treat is anything the player collects.
+ * @constructor
+ * @param {number} x The x location.
+ * @param {number} y The y location.
+ */
+var Treat = function(x, y) {
+
+  /** The x location.
+      @type {number} */
+  this.x = x;
+
+  /** The y location.
+      @type {number} */
+  this.y = y;
+
+  /** The URL for the graphic.
+      @type {string} */
+  this.sprite = 'images/gem-blue.png';
+};
+
+/**
+ * Hit area rectangle for collisions. Relative to the x,y of the sprite.
+ * [x, y, width, height]
+ * @type {Array.<number>}
+ */
+Treat.prototype.HIT_AREA_RECT = [1, 81, 99, 83];
+
+/**
+ * Updates the treat.
+ */
+Treat.prototype.update = function() {
+  if (this.collidedWithPlayer()) {
+    gameStateController.collectTreat(this);
+  }
+};
+
+/**
+ * Draws the treat on the canvas.
+ */
+Treat.prototype.render = function() {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+  // for debugging
+  if (showBoundaries) {
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
+                   this.y + this.HIT_AREA_RECT[1],
+                   this.HIT_AREA_RECT[2],
+                   this.HIT_AREA_RECT[3]);
+  }
+};
+
+/**
+ * Returns whether the treat's hit bounds intersect with the player's hit
+ * bounds, as defined by their HIT_RECT_AREA properties.
+ * @returns {boolean} Whether this treat and the player's hit areas intersect.
+ */
+Treat.prototype.collidedWithPlayer = function() {
+  var left = this.x + this.HIT_AREA_RECT[0];
+  var right = this.x + this.HIT_AREA_RECT[2];
+  var top = this.y + this.HIT_AREA_RECT[1];
+  var bottom = this.y + this.HIT_AREA_RECT[3];
+  var playerLeft = player.x + player.HIT_AREA_RECT[0];
+  var playerRight = player.x + player.HIT_AREA_RECT[2];
+  var playerTop = player.y + player.HIT_AREA_RECT[1];
+  var playerBottom = player.y + player.HIT_AREA_RECT[3];
+
+  return (right >= playerLeft && left <= playerRight) &&
+         (top <= playerBottom && bottom >= playerTop);
+};
+
+
+/**
+ * Creates a new Gem object.
+ * @constructor
+ * @extends Treat
+ * @param {number} x The x location.
+ * @param {number} y The y location.
+ * @param {string} [color=blue] The color of the gem. This should match a
+ *     suffix in a PNG in images/. ex. 'orange' for gem-orange.png.
+ * @example
+ * var gem = new Gem(10, 20, 'orange'); // Creates an orange gem.
+ */
+var Gem = function(x, y, color) {
+  Treat.call(this, x, y);
+
+  this.color = color || 'blue';
+
+  this.sprite = 'images/gem-' + this.color + '.png';
+};
+
+Gem.prototype = Object.create(Treat.prototype);
+Gem.prototype.constructor = Gem;
+
+/**
+ * Creates a new Heart object.
+ * @constructor
+ * @extends Treat
+ * @param {number} x The x location.
+ * @param {number} y The y location.
+ */
+var Heart = function(x, y) {
+  Treat.call(this, x, y);
+};
+
+Heart.prototype = Object.create(Treat.prototype);
+Heart.prototype.constructor = Heart;
+
+
+
+
 /* Game State Controller */
 
 /**
@@ -281,6 +392,10 @@ var GameStateController = function(enemyCount, maxSpeed, minSpeed) {
       @type {number} */
   this.level = 1;
 
+  /**
+      */
+  this.score = 0;
+
   /** The number of enemies currently on the board.
       @type {number} */
   this.enemyCount = enemyCount;
@@ -292,6 +407,9 @@ var GameStateController = function(enemyCount, maxSpeed, minSpeed) {
   /** The minimum speed the enemy's randomized speed calc.
       @type {number} */
   this.minSpeed = minSpeed;
+
+  this.treatCount = 1;
+
 };
 
 /**
@@ -328,10 +446,76 @@ GameStateController.prototype.generateEnemies = function() {
 };
 
 /**
- * Increases level counter and upgrades enemies.
+ * Clears the treats.
+ */
+GameStateController.prototype.clearTreats = function() {
+  allTreats = [];
+};
+
+/**
+ * Creates all of the treats.
+ */
+GameStateController.prototype.generateTreats = function() {
+  // Put X and Y values into arrays so we can randomize an index. Note
+  // that treats can't be in the water, so the first row of the game
+  // board is left out.
+  var rows = [rowHeight + characterVertOffset,
+              rowHeight * 2 + characterVertOffset,
+              rowHeight * 3 + characterVertOffset,
+              rowHeight * 4 + characterVertOffset,
+              rowHeight * 5 + characterVertOffset];
+  var columns = [0, colWidth, colWidth * 2, colWidth * 3, colWidth * 4];
+
+  // Create random indexes, storing them as pairs so we can sort them by
+  // the row index for proper overlap when rendering.
+
+  var indexPairs = [];
+
+  for (var i = 0; i < this.treatCount; i++) {
+    var rowsIndex = Math.round(Math.random() * (rows.length - 1));
+    var columnsIndex = Math.round(Math.random() * (columns.length - 1));
+    indexPairs.push([rowsIndex, columnsIndex]);
+  }
+
+  indexPairs = indexPairs.sort(function(a,b) {
+                                return a[0] - b[0];
+                               });
+
+  // Create all the treats.
+  for (i = 0; i < indexPairs.length; i++) {
+    var x = columns[indexPairs[i][1]];
+    var y = rows[indexPairs[i][0]];
+
+    allTreats.push(new Gem(x, y, 'green'));
+  }
+};
+
+/**
+ * Collects the treat.
+ * @param {Treat} treat The treat to remove from the board.
+ */
+GameStateController.prototype.collectTreat = function(treat) {
+  gameStateController.updateScore();
+
+  // Remove the reference to this treat so it will no longer get drawn
+  // in update loop.
+  for (var i = allTreats.length - 1; i >= 0; i--) {
+    if (allTreats[i] === treat) {
+      allTreats.splice(i, 1);
+      break;
+    }
+  }
+
+};
+
+/**
+ * Increases level counter and upgrades enemies, treats, etc.
  */
 GameStateController.prototype.levelUp = function() {
   this.level++;
+  levelDisplay.innerHTML = this.level;
+
+  this.updateScore();
   console.log("level ", this.level);
 
   // Increase enemy count every five levels.
@@ -340,18 +524,36 @@ GameStateController.prototype.levelUp = function() {
     this.enemyCount++;
   }
 
-  // Increase enemy count every two levels.
+  // Increase enemy speed and treat count every two levels.
   if (this.level % 2 === 0) {
     console.log(this.level, 'increasing speed');
     this.maxSpeed += 10;
     this.minSpeed += 5;
+
+    this.treatCount++;
   }
 
   this.clearEnemies();
+  this.clearTreats();
   this.generateEnemies();
+  this.generateTreats();
 };
 
+/**
+ * Increases score and updates display to user.
+ * @param {number} [points=1] The points to add to the score.
+ */
+GameStateController.prototype.updateScore = function(points) {
+  points = points || 1;
+  this.score += points;
+  console.log('score', this.score);
 
+  // Update the score display.
+  scoreDisplay.innerHTML = this.score;
+};
+
+/** Whether to draw the boundaries of the game pieces. For debugging only. **/
+var showBoundaries = true;
 
 /** Height of each asset. */
 var assetHeight = 171;
@@ -386,11 +588,17 @@ var gameStateController = new GameStateController(3, 200, 100);
 
 /** Array that holds all the enemy instances. */
 var allEnemies = [];
-
 gameStateController.generateEnemies();
 
 /** The player instance. */
 var player = new Player(2 * colWidth, 5 * rowHeight + characterVertOffset);
+
+/** Array to hold the treats. */
+var allTreats = [];
+gameStateController.generateTreats();
+
+var scoreDisplay = document.getElementById('score');
+var levelDisplay = document.getElementById('level');
 
 // Listen for user input
 document.addEventListener('keyup', function(e) {
