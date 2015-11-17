@@ -20,4 +20,4 @@ To run the game:
 
 Your objective is to get across the walkway and to the water on the other side.
 
-Use the arrow keys on your keyboard to navigate up, down, and side-to-side. If you hit a bug, you'll be knocked back to where you started. When you reach the water you'll return to the bottom of the screen and the difficulty will increase.
+Use the arrow keys on your keyboard to navigate up, down, and side-to-side. If you hit a bug, you'll be knocked back to where you started. When you reach the water you'll return to the bottom of the screen and the difficulty will increase. Collect gems and hearts to get more points!
