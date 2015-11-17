@@ -560,6 +560,8 @@ GameStateController.prototype.levelUp = function() {
 
   // Animate the level display.
   levelDisplay.classList.add('pulse');
+  levelDisplay.addEventListener('webkitAnimationEnd',
+                                this.pulseAnimationEndHandler);
   levelDisplay.addEventListener('animationend',
                                 this.pulseAnimationEndHandler);
 
@@ -605,6 +607,8 @@ GameStateController.prototype.updateScore = function(points) {
 
   // Animate the score display.
   scoreDisplay.classList.add('pulse');
+  scoreDisplay.addEventListener('webkitAnimationEnd',
+                                this.pulseAnimationEndHandler);
   scoreDisplay.addEventListener('animationend',
                                 this.pulseAnimationEndHandler);
 
@@ -612,6 +616,8 @@ GameStateController.prototype.updateScore = function(points) {
 
 GameStateController.prototype.pulseAnimationEndHandler = function(event) {
   event.target.classList.remove('pulse');
+  event.target.removeEventListener('webkitAnimationEnd',
+                                    this.pulseAnimationEndHandler);
   event.target.removeEventListener('animationend',
                                     this.pulseAnimationEndHandler);
 };
