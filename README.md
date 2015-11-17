@@ -14,7 +14,7 @@ To run the game:
 
 1. Download the .zip file using the **Download ZIP** button located in the GitHub sidebar
 2. Unzip the file
-3. Point your browser to index.html in the files that you just unzipped
+3. Point your browser to index.html in the src folder of the files that you just unzipped
 
 ## How to Play
 
