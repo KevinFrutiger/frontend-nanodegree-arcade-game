@@ -12,7 +12,7 @@ A Web browser.
 
 To run the game:
 
-1. Download the .zip file using the **Download ZIP** button located in the GitHub sidebar (might not be available if you're on a mobile device)
+1. Download the .zip file using the **Download ZIP** button located in the GitHub sidebar
 2. Unzip the file
 3. Point your browser to index.html in the files that you just unzipped
 
