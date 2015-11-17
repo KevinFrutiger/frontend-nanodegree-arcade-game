@@ -9,6 +9,7 @@ body {
   border-right: 3px solid #6d7b84;
   border-bottom: 3px solid #6d7b84;
   border-left: 3px solid #d2d2d4;
+  display: webkit-flex;
   display: flex;
   margin: 0 auto;
   padding: 10px;
@@ -31,4 +32,29 @@ body {
 .number-display {
   font-size: 1.4rem;
   font-weight: bold;
+}
+
+.pulse {
+  /* If delay is not present, Chrome will leave behind pixels of the element at its start point
+     while it transforms. */
+  -webkit-animation: 0.5s ease-out 0.05s 2 alternate none pulse; /* Safari 8 */
+  animation: 0.5s ease-out 0.05s 2 alternate none pulse;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  100% {
+    transform: scale3d(2, 2, 1);
+  }
+}
+
+@-webkit-keyframes pulse { /* Safari 8 */
+  0% {
+    -webkit-transform: scale3d(1, 1, 1);
+  }
+  100% {
+    -webkit-transform: scale3d(2, 2, 1);
+  }
 }

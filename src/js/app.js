@@ -540,7 +540,6 @@ GameStateController.prototype.generateTreats = function() {
  * @param {Treat} treat The treat to remove from the board.
  */
 GameStateController.prototype.collectTreat = function(treat) {
-  gameStateController.updateScore();
 
   // Remove the reference to this treat so it will no longer get drawn
   // in update loop.
@@ -551,6 +550,7 @@ GameStateController.prototype.collectTreat = function(treat) {
     }
   }
 
+  gameStateController.updateScore();
 };
 
 /**
@@ -559,6 +559,12 @@ GameStateController.prototype.collectTreat = function(treat) {
 GameStateController.prototype.levelUp = function() {
   this.level++;
   levelDisplay.innerHTML = this.level;
+
+  // Animate the level display.
+  levelDisplay.classList.add('pulse');
+  levelDisplay.addEventListener('animationend',
+                                this.pulseAnimationEndHandler);
+
   console.log("level ", this.level);
 
   this.updateScore();
@@ -598,6 +604,18 @@ GameStateController.prototype.updateScore = function(points) {
 
   // Update the score display.
   scoreDisplay.innerHTML = this.score;
+
+  // Animate the score display.
+  scoreDisplay.classList.add('pulse');
+  scoreDisplay.addEventListener('animationend',
+                                this.pulseAnimationEndHandler);
+
+};
+
+GameStateController.prototype.pulseAnimationEndHandler = function(event) {
+  event.target.classList.remove('pulse');
+  event.target.removeEventListener('animationend',
+                                    this.pulseAnimationEndHandler);
 };
 
 /** Whether to draw the boundaries of the game pieces. For debugging only. **/
