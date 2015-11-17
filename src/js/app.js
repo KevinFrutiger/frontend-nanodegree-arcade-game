@@ -456,37 +456,57 @@ GameStateController.prototype.clearTreats = function() {
  * Creates all of the treats.
  */
 GameStateController.prototype.generateTreats = function() {
-  // Put X and Y values into arrays so we can randomize an index. Note
-  // that treats can't be in the water, so the first row of the game
-  // board is left out.
+  // Put X and Y values into arrays so we can randomize an index. Ignore
+  // the row containing the water and the row containing the player.
+  var columns = [0, colWidth, colWidth * 2, colWidth * 3, colWidth * 4];
   var rows = [rowHeight + characterVertOffset,
               rowHeight * 2 + characterVertOffset,
               rowHeight * 3 + characterVertOffset,
-              rowHeight * 4 + characterVertOffset,
-              rowHeight * 5 + characterVertOffset];
-  var columns = [0, colWidth, colWidth * 2, colWidth * 3, colWidth * 4];
+              rowHeight * 4 + characterVertOffset];
 
   // Create random indexes, storing them as pairs so we can sort them by
   // the row index for proper overlap when rendering.
 
   var indexPairs = [];
 
-  for (var i = 0; i < this.treatCount; i++) {
-    var rowsIndex = Math.round(Math.random() * (rows.length - 1));
+  // Loop to push new pairs until we get a unique pair for total number of
+  // treats we need.
+  while (indexPairs.length < this.treatCount) {
     var columnsIndex = Math.round(Math.random() * (columns.length - 1));
-    indexPairs.push([rowsIndex, columnsIndex]);
+    var rowsIndex = Math.round(Math.random() * (rows.length - 1));
+
+    var duplicate = false;
+
+    // Check if that row,column is already in the array.
+    for (var j = 0, len = indexPairs.length; j < len; j++) {
+      if (indexPairs[j][0] == columnsIndex && indexPairs[j][1] == rowsIndex) {
+        // Try again.
+        duplicate = true;
+        break;
+      }
+    }
+
+    if (duplicate) {
+      continue;
+    } else {
+      indexPairs.push([columnsIndex, rowsIndex]);
+    }
   }
 
+  // Sort the array so we can later draw the treats from top to bottom for
+  // proper layering.
   indexPairs = indexPairs.sort(function(a,b) {
-                                return a[0] - b[0];
+                                return a[1] - b[1];
                                });
+
+  indexPairs.forEach(function(item) {console.log('indexPairs', item)});
 
   var treatTypes = ['blue', 'green', 'orange', 'heart'];
 
   // Create all the treats.
   for (i = 0; i < indexPairs.length; i++) {
-    var x = columns[indexPairs[i][1]];
-    var y = rows[indexPairs[i][0]];
+    var x = columns[indexPairs[i][0]];
+    var y = rows[indexPairs[i][1]];
 
     var treatIndex = Math.round(Math.random() * (treatTypes.length - 1));
     var treatType = treatTypes[treatIndex];
@@ -539,9 +559,9 @@ GameStateController.prototype.collectTreat = function(treat) {
 GameStateController.prototype.levelUp = function() {
   this.level++;
   levelDisplay.innerHTML = this.level;
+  console.log("level ", this.level);
 
   this.updateScore();
-  console.log("level ", this.level);
 
   // Increase enemy count every five levels.
   if (this.level % 5 === 0) {
@@ -555,7 +575,10 @@ GameStateController.prototype.levelUp = function() {
     this.maxSpeed += 10;
     this.minSpeed += 5;
 
-    this.treatCount++;
+    console.log(this.level, 'increasting treat count');
+    if (this.treatCount < 5 * 4) { // 5 columns x 4 rows
+      this.treatCount++;
+    }
   }
 
   this.clearEnemies();
@@ -578,7 +601,7 @@ GameStateController.prototype.updateScore = function(points) {
 };
 
 /** Whether to draw the boundaries of the game pieces. For debugging only. **/
-var showBoundaries = true;
+var showBoundaries = false;
 
 /** Height of each asset. */
 var assetHeight = 171;

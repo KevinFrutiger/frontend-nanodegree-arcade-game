@@ -1,3 +1,34 @@
 body {
     text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.display {
+  background: #fff;
+  border-top: 3px solid #d2d2d4;
+  border-right: 3px solid #6d7b84;
+  border-bottom: 3px solid #6d7b84;
+  border-left: 3px solid #d2d2d4;
+  display: flex;
+  margin: 0 auto;
+  padding: 10px;
+  position: absolute;
+  right: calc(50vw - 505px / 2 - 20px);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.display h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 0.80rem;
+}
+
+.display > div {
+  margin: 0 10px;
+}
+
+.number-display {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
