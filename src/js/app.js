@@ -67,6 +67,7 @@ Enemy.prototype.render = function() {
 
   // for debugging
   if (SHOW_BOUNDARIES) {
+    // TODO Store current style and reset afterwards. Move to util function.
     ctx.strokeStyle = 'black';
     ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
@@ -95,6 +96,7 @@ Enemy.prototype.collidedWithPlayer = function() {
   var right = this.x + this.HIT_AREA_RECT[2];
   var top = this.y + this.HIT_AREA_RECT[1];
   var bottom = this.y + this.HIT_AREA_RECT[3];
+
   var playerLeft = player.x + player.HIT_AREA_RECT[0];
   var playerRight = player.x + player.HIT_AREA_RECT[2];
   var playerTop = player.y + player.HIT_AREA_RECT[1];
@@ -185,6 +187,7 @@ Player.prototype.render = function() {
 
   // for debugging
   if (SHOW_BOUNDARIES) {
+    // TODO Store current style and reset afterwards
     ctx.strokeStyle = 'black';
     ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
@@ -328,6 +331,7 @@ Treat.prototype.collidedWithPlayer = function() {
   var right = this.x + this.HIT_AREA_RECT[2];
   var top = this.y + this.HIT_AREA_RECT[1];
   var bottom = this.y + this.HIT_AREA_RECT[3];
+
   var playerLeft = player.x + player.HIT_AREA_RECT[0];
   var playerRight = player.x + player.HIT_AREA_RECT[2];
   var playerTop = player.y + player.HIT_AREA_RECT[1];
@@ -392,8 +396,8 @@ var GameStateController = function(enemyCount, maxSpeed, minSpeed) {
       @type {number} */
   this.level = 1;
 
-  /**
-      */
+  /** The player's current score.
+      @type {number} */
   this.score = 0;
 
   /** The number of enemies currently on the board.
@@ -408,6 +412,8 @@ var GameStateController = function(enemyCount, maxSpeed, minSpeed) {
       @type {number} */
   this.minSpeed = minSpeed;
 
+  /** The current number of treats available.
+      @type {number} */
   this.treatCount = 1;
 
 };
@@ -477,10 +483,10 @@ GameStateController.prototype.generateTreats = function() {
 
     var duplicate = false;
 
-    // Check if that row,column is already in the array.
+    // Check if that row-column pair is already in the array.
     for (var j = 0, len = indexPairs.length; j < len; j++) {
       if (indexPairs[j][0] == columnsIndex && indexPairs[j][1] == rowsIndex) {
-        // Try again.
+        // Flag to continue on without storing this pair.
         duplicate = true;
         break;
       }
@@ -493,8 +499,8 @@ GameStateController.prototype.generateTreats = function() {
     }
   }
 
-  // Sort the array so we can later draw the treats from top to bottom for
-  // proper layering.
+  // Sort the array so we can later render the treats from top to bottom of
+  // game board for proper layering.
   indexPairs = indexPairs.sort(function(a,b) {
                                 return a[1] - b[1];
                                });
@@ -614,6 +620,10 @@ GameStateController.prototype.updateScore = function(points) {
 
 };
 
+/**
+ * Handles the animationend event for the pulse animation.
+ * @param {Object} event
+ */
 GameStateController.prototype.pulseAnimationEndHandler = function(event) {
   event.target.classList.remove('pulse');
   event.target.removeEventListener('webkitAnimationEnd',
@@ -667,6 +677,7 @@ var player = new Player(2 * COL_WIDTH, 5 * ROW_HEIGHT + CHARACTER_VERT_OFFSET);
 var allTreats = [];
 gameStateController.generateTreats();
 
+// Get references to the score and level display.
 var scoreDisplay = document.getElementById('score');
 var levelDisplay = document.getElementById('level');
 
