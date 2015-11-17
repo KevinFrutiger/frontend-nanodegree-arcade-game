@@ -78,7 +78,7 @@ Enemy.prototype.update = function(dt) {
 
   if (this.isOffStage()) {
     // Reset x to one column to the left of the stage.
-    this.x = -colWidth;
+    this.x = -COL_WIDTH;
   }
 
   if (this.collidedWithPlayer()) {
@@ -94,9 +94,9 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -110,7 +110,7 @@ Enemy.prototype.render = function() {
  * @returns {boolean} Whether the enemy is off the stage.
  */
 Enemy.prototype.isOffStage = function() {
-  return this.x >= canvasWidth;
+  return this.x >= CANVAS_WIDTH;
 };
 
 /**
@@ -212,9 +212,9 @@ Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -232,19 +232,19 @@ Player.prototype.handleInput = function(key) {
   // Calculate the goal x and y based on the direction.
   switch(key) {
     case 'left':
-      this.goalX = this.x - colWidth;
+      this.goalX = this.x - COL_WIDTH;
       break;
 
     case 'up':
-      this.goalY = this.y - rowHeight;
+      this.goalY = this.y - ROW_HEIGHT;
       break;
 
     case 'right':
-      this.goalX = this.x + colWidth;
+      this.goalX = this.x + COL_WIDTH;
       break;
 
     case 'down':
-      this.goalY = this.y + rowHeight;
+      this.goalY = this.y + ROW_HEIGHT;
       break;
 
     default:
@@ -268,7 +268,7 @@ Player.prototype.reset = function() {
  * @returns {boolean} Whether goalX is valid.
  */
 Player.prototype.isValidGoalX = function() {
-  return this.goalX >= 0 &amp;&amp; this.goalX &lt; canvasWidth;
+  return this.goalX >= 0 &amp;&amp; this.goalX &lt; CANVAS_WIDTH;
 };
 
 /**
@@ -276,8 +276,8 @@ Player.prototype.isValidGoalX = function() {
  * @returns {boolean} Whether goalY is valid.
  */
 Player.prototype.isValidGoalY = function() {
-  return this.goalY >= characterVertOffset &amp;&amp;
-         this.goalY &lt; canvasHeight - assetHeight;
+  return this.goalY >= CHARACTER_VERT_OFFSET &amp;&amp;
+         this.goalY &lt; CANVAS_HEIGHT - ASSET_HEIGHT;
 };
 
 /**
@@ -285,7 +285,7 @@ Player.prototype.isValidGoalY = function() {
  * @returns {boolean} Whether player is on the water.
  */
 Player.prototype.isInTheWater = function() {
-  return this.y == characterVertOffset;
+  return this.y == CHARACTER_VERT_OFFSET;
 };
 
 
@@ -335,9 +335,9 @@ Treat.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -367,7 +367,7 @@ Treat.prototype.collidedWithPlayer = function() {
 
 
 /**
- * Creates a new Gem objec.
+ * Creates a new Gem object.
  * @constructor
  * @extends Treat
  * @param {number} x The x location.
@@ -397,12 +397,12 @@ Gem.prototype.constructor = Gem;
  */
 var Heart = function(x, y) {
   Treat.call(this, x, y);
+
+  this.sprite = 'images/heart.png';
 };
 
 Heart.prototype = Object.create(Treat.prototype);
 Heart.prototype.constructor = Heart;
-
-
 
 
 /* Game State Controller */
@@ -458,7 +458,7 @@ GameStateController.prototype.generateEnemies = function() {
 
   // Create all initial enemies.
   for (var i = startRow; i &lt;= this.enemyCount; i++) {
-    var startX = Math.random() * (canvasWidth - 0);
+    var startX = Math.random() * (CANVAS_WIDTH - 0);
 
     // Increment the row number, normalizing to startRow through endRow.
     var rowNum = i - rowGroupCount * endRow;
@@ -466,7 +466,7 @@ GameStateController.prototype.generateEnemies = function() {
     // If we've reached the end of the group, increment the row set counter.
     if (i % endRow === 0) rowGroupCount++;
 
-    var startY = rowNum * rowHeight + characterVertOffset;
+    var startY = rowNum * ROW_HEIGHT + CHARACTER_VERT_OFFSET;
     var speed = Math.random() * (this.maxSpeed - this.minSpeed) + this.minSpeed;
 
     allEnemies.push(new Enemy(startX, startY, speed));
@@ -484,37 +484,82 @@ GameStateController.prototype.clearTreats = function() {
  * Creates all of the treats.
  */
 GameStateController.prototype.generateTreats = function() {
-  // Put X and Y values into arrays so we can randomize an index. Note
-  // that treats can't be in the water, so the first row of the game
-  // board is left out.
-  var rows = [rowHeight + characterVertOffset,
-              rowHeight * 2 + characterVertOffset,
-              rowHeight * 3 + characterVertOffset,
-              rowHeight * 4 + characterVertOffset,
-              rowHeight * 5 + characterVertOffset];
-  var columns = [0, colWidth, colWidth * 2, colWidth * 3, colWidth * 4];
+  // Put X and Y values into arrays so we can randomize an index. Ignore
+  // the row containing the water and the row containing the player.
+  var columns = [0, COL_WIDTH, COL_WIDTH * 2, COL_WIDTH * 3, COL_WIDTH * 4];
+  var rows = [ROW_HEIGHT + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 2 + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 3 + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 4 + CHARACTER_VERT_OFFSET];
 
   // Create random indexes, storing them as pairs so we can sort them by
   // the row index for proper overlap when rendering.
 
   var indexPairs = [];
 
-  for (var i = 0; i &lt; this.treatCount; i++) {
-    var rowsIndex = Math.round(Math.random() * (rows.length - 1));
+  // Loop to push new pairs until we get a unique pair for total number of
+  // treats we need.
+  while (indexPairs.length &lt; this.treatCount) {
     var columnsIndex = Math.round(Math.random() * (columns.length - 1));
-    indexPairs.push([rowsIndex, columnsIndex]);
+    var rowsIndex = Math.round(Math.random() * (rows.length - 1));
+
+    var duplicate = false;
+
+    // Check if that row,column is already in the array.
+    for (var j = 0, len = indexPairs.length; j &lt; len; j++) {
+      if (indexPairs[j][0] == columnsIndex &amp;&amp; indexPairs[j][1] == rowsIndex) {
+        // Try again.
+        duplicate = true;
+        break;
+      }
+    }
+
+    if (duplicate) {
+      continue;
+    } else {
+      indexPairs.push([columnsIndex, rowsIndex]);
+    }
   }
 
+  // Sort the array so we can later draw the treats from top to bottom for
+  // proper layering.
   indexPairs = indexPairs.sort(function(a,b) {
-                                return a[0] - b[0];
+                                return a[1] - b[1];
                                });
 
-  // Create all the treats
-  for (i = 0; i &lt; indexPairs.length; i++) {
-    var x = columns[indexPairs[i][1]];
-    var y = rows[indexPairs[i][0]];
+  indexPairs.forEach(function(item) {console.log('indexPairs', item)});
 
-    allTreats.push(new Gem(x, y, 'green'));
+  var treatTypes = ['blue', 'green', 'orange', 'heart'];
+
+  // Create all the treats.
+  for (i = 0; i &lt; indexPairs.length; i++) {
+    var x = columns[indexPairs[i][0]];
+    var y = rows[indexPairs[i][1]];
+
+    var treatIndex = Math.round(Math.random() * (treatTypes.length - 1));
+    var treatType = treatTypes[treatIndex];
+
+    switch(treatType) {
+      case 'blue':
+        allTreats.push(new Gem(x, y, 'blue'));
+        break;
+
+      case 'green':
+        allTreats.push(new Gem(x, y, 'green'));
+        break;
+
+      case 'orange':
+        allTreats.push(new Gem(x, y, 'orange'));
+        break;
+
+      case 'heart':
+        allTreats.push(new Heart(x, y));
+        break;
+
+      default:
+        console.warn('Something went wrong selecting treat with ' + treatType);
+    }
+
   }
 };
 
@@ -523,7 +568,6 @@ GameStateController.prototype.generateTreats = function() {
  * @param {Treat} treat The treat to remove from the board.
  */
 GameStateController.prototype.collectTreat = function(treat) {
-  gameStateController.updateScore();
 
   // Remove the reference to this treat so it will no longer get drawn
   // in update loop.
@@ -534,6 +578,7 @@ GameStateController.prototype.collectTreat = function(treat) {
     }
   }
 
+  gameStateController.updateScore();
 };
 
 /**
@@ -543,8 +588,14 @@ GameStateController.prototype.levelUp = function() {
   this.level++;
   levelDisplay.innerHTML = this.level;
 
-  this.updateScore();
+  // Animate the level display.
+  levelDisplay.classList.add('pulse');
+  levelDisplay.addEventListener('animationend',
+                                this.pulseAnimationEndHandler);
+
   console.log("level ", this.level);
+
+  this.updateScore();
 
   // Increase enemy count every five levels.
   if (this.level % 5 === 0) {
@@ -558,7 +609,10 @@ GameStateController.prototype.levelUp = function() {
     this.maxSpeed += 10;
     this.minSpeed += 5;
 
-    this.treatCount++;
+    console.log(this.level, 'increasting treat count');
+    if (this.treatCount &lt; 5 * 4) { // 5 columns x 4 rows
+      this.treatCount++;
+    }
   }
 
   this.clearEnemies();
@@ -578,24 +632,36 @@ GameStateController.prototype.updateScore = function(points) {
 
   // Update the score display.
   scoreDisplay.innerHTML = this.score;
+
+  // Animate the score display.
+  scoreDisplay.classList.add('pulse');
+  scoreDisplay.addEventListener('animationend',
+                                this.pulseAnimationEndHandler);
+
+};
+
+GameStateController.prototype.pulseAnimationEndHandler = function(event) {
+  event.target.classList.remove('pulse');
+  event.target.removeEventListener('animationend',
+                                    this.pulseAnimationEndHandler);
 };
 
 /** Whether to draw the boundaries of the game pieces. For debugging only. **/
-var showBoundaries = true;
+var SHOW_BOUNDARIES = false;
 
 /** Height of each asset. */
-var assetHeight = 171;
+var ASSET_HEIGHT = 171;
 
 /** Width of each asset. */
-var assetWidth = 101;
+var ASSET_WIDTH = 101;
 
 /** Width of image asset */
-var colWidth = assetWidth;
+var COL_WIDTH = ASSET_WIDTH;
 
 /**
  * Height of image asset. 171px tall image assets, overlap other rows by 88px.
  */
-var rowHeight = 83;
+var ROW_HEIGHT = 83;
 
 /**
  * Offset for the character asset's visual elements.
@@ -603,13 +669,13 @@ var rowHeight = 83;
  * though they're the same dimensions. This offset is used to line up the
  * character so it overlays the tiles correctly.
  */
-var characterVertOffset = -32;
+var CHARACTER_VERT_OFFSET = -32;
 
 /** Width of the canvas. */
-var canvasWidth = 505;
+var CANVAS_WIDTH = 505;
 
 /** Height of the canvas. */
-var canvasHeight = 606;
+var CANVAS_HEIGHT = 606;
 
 /** Instance to store game state. */
 var gameStateController = new GameStateController(3, 200, 100);
@@ -619,7 +685,7 @@ var allEnemies = [];
 gameStateController.generateEnemies();
 
 /** The player instance. */
-var player = new Player(2 * colWidth, 5 * rowHeight + characterVertOffset);
+var player = new Player(2 * COL_WIDTH, 5 * ROW_HEIGHT + CHARACTER_VERT_OFFSET);
 
 /** Array to hold the treats. */
 var allTreats = [];
@@ -649,13 +715,13 @@ document.addEventListener('keyup', function(e) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemy.html">Enemy</a></li><li><a href="GameStateController.html">GameStateController</a></li><li><a href="Gem.html">Gem</a></li><li><a href="Heart.html">Heart</a></li><li><a href="Player.html">Player</a></li><li><a href="Treat.html">Treat</a></li></ul><h3>Global</h3><ul><li><a href="global.html#allEnemies">allEnemies</a></li><li><a href="global.html#allTreats">allTreats</a></li><li><a href="global.html#assetHeight">assetHeight</a></li><li><a href="global.html#assetWidth">assetWidth</a></li><li><a href="global.html#canvasHeight">canvasHeight</a></li><li><a href="global.html#canvasWidth">canvasWidth</a></li><li><a href="global.html#characterVertOffset">characterVertOffset</a></li><li><a href="global.html#colWidth">colWidth</a></li><li><a href="global.html#gameStateController">gameStateController</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#rowHeight">rowHeight</a></li><li><a href="global.html#showBoundaries">showBoundaries</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemy.html">Enemy</a></li><li><a href="GameStateController.html">GameStateController</a></li><li><a href="Gem.html">Gem</a></li><li><a href="Heart.html">Heart</a></li><li><a href="Player.html">Player</a></li><li><a href="Treat.html">Treat</a></li></ul><h3>Global</h3><ul><li><a href="global.html#allEnemies">allEnemies</a></li><li><a href="global.html#allTreats">allTreats</a></li><li><a href="global.html#ASSET_HEIGHT">ASSET_HEIGHT</a></li><li><a href="global.html#ASSET_WIDTH">ASSET_WIDTH</a></li><li><a href="global.html#CANVAS_HEIGHT">CANVAS_HEIGHT</a></li><li><a href="global.html#CANVAS_WIDTH">CANVAS_WIDTH</a></li><li><a href="global.html#CHARACTER_VERT_OFFSET">CHARACTER_VERT_OFFSET</a></li><li><a href="global.html#COL_WIDTH">COL_WIDTH</a></li><li><a href="global.html#gameStateController">gameStateController</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#ROW_HEIGHT">ROW_HEIGHT</a></li><li><a href="global.html#SHOW_BOUNDARIES">SHOW_BOUNDARIES</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sun Nov 15 2015 18:00:54 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Mon Nov 16 2015 18:31:55 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

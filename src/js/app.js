@@ -50,7 +50,7 @@ Enemy.prototype.update = function(dt) {
 
   if (this.isOffStage()) {
     // Reset x to one column to the left of the stage.
-    this.x = -colWidth;
+    this.x = -COL_WIDTH;
   }
 
   if (this.collidedWithPlayer()) {
@@ -66,9 +66,9 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -82,7 +82,7 @@ Enemy.prototype.render = function() {
  * @returns {boolean} Whether the enemy is off the stage.
  */
 Enemy.prototype.isOffStage = function() {
-  return this.x >= canvasWidth;
+  return this.x >= CANVAS_WIDTH;
 };
 
 /**
@@ -184,9 +184,9 @@ Player.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -204,19 +204,19 @@ Player.prototype.handleInput = function(key) {
   // Calculate the goal x and y based on the direction.
   switch(key) {
     case 'left':
-      this.goalX = this.x - colWidth;
+      this.goalX = this.x - COL_WIDTH;
       break;
 
     case 'up':
-      this.goalY = this.y - rowHeight;
+      this.goalY = this.y - ROW_HEIGHT;
       break;
 
     case 'right':
-      this.goalX = this.x + colWidth;
+      this.goalX = this.x + COL_WIDTH;
       break;
 
     case 'down':
-      this.goalY = this.y + rowHeight;
+      this.goalY = this.y + ROW_HEIGHT;
       break;
 
     default:
@@ -240,7 +240,7 @@ Player.prototype.reset = function() {
  * @returns {boolean} Whether goalX is valid.
  */
 Player.prototype.isValidGoalX = function() {
-  return this.goalX >= 0 && this.goalX < canvasWidth;
+  return this.goalX >= 0 && this.goalX < CANVAS_WIDTH;
 };
 
 /**
@@ -248,8 +248,8 @@ Player.prototype.isValidGoalX = function() {
  * @returns {boolean} Whether goalY is valid.
  */
 Player.prototype.isValidGoalY = function() {
-  return this.goalY >= characterVertOffset &&
-         this.goalY < canvasHeight - assetHeight;
+  return this.goalY >= CHARACTER_VERT_OFFSET &&
+         this.goalY < CANVAS_HEIGHT - ASSET_HEIGHT;
 };
 
 /**
@@ -257,7 +257,7 @@ Player.prototype.isValidGoalY = function() {
  * @returns {boolean} Whether player is on the water.
  */
 Player.prototype.isInTheWater = function() {
-  return this.y == characterVertOffset;
+  return this.y == CHARACTER_VERT_OFFSET;
 };
 
 
@@ -307,9 +307,9 @@ Treat.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
   // for debugging
-  if (showBoundaries) {
+  if (SHOW_BOUNDARIES) {
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(this.x, this.y, assetWidth, assetHeight);
+    ctx.strokeRect(this.x, this.y, ASSET_WIDTH, ASSET_HEIGHT);
     ctx.strokeStyle = 'red';
     ctx.strokeRect(this.x + this.HIT_AREA_RECT[0],
                    this.y + this.HIT_AREA_RECT[1],
@@ -430,7 +430,7 @@ GameStateController.prototype.generateEnemies = function() {
 
   // Create all initial enemies.
   for (var i = startRow; i <= this.enemyCount; i++) {
-    var startX = Math.random() * (canvasWidth - 0);
+    var startX = Math.random() * (CANVAS_WIDTH - 0);
 
     // Increment the row number, normalizing to startRow through endRow.
     var rowNum = i - rowGroupCount * endRow;
@@ -438,7 +438,7 @@ GameStateController.prototype.generateEnemies = function() {
     // If we've reached the end of the group, increment the row set counter.
     if (i % endRow === 0) rowGroupCount++;
 
-    var startY = rowNum * rowHeight + characterVertOffset;
+    var startY = rowNum * ROW_HEIGHT + CHARACTER_VERT_OFFSET;
     var speed = Math.random() * (this.maxSpeed - this.minSpeed) + this.minSpeed;
 
     allEnemies.push(new Enemy(startX, startY, speed));
@@ -458,11 +458,11 @@ GameStateController.prototype.clearTreats = function() {
 GameStateController.prototype.generateTreats = function() {
   // Put X and Y values into arrays so we can randomize an index. Ignore
   // the row containing the water and the row containing the player.
-  var columns = [0, colWidth, colWidth * 2, colWidth * 3, colWidth * 4];
-  var rows = [rowHeight + characterVertOffset,
-              rowHeight * 2 + characterVertOffset,
-              rowHeight * 3 + characterVertOffset,
-              rowHeight * 4 + characterVertOffset];
+  var columns = [0, COL_WIDTH, COL_WIDTH * 2, COL_WIDTH * 3, COL_WIDTH * 4];
+  var rows = [ROW_HEIGHT + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 2 + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 3 + CHARACTER_VERT_OFFSET,
+              ROW_HEIGHT * 4 + CHARACTER_VERT_OFFSET];
 
   // Create random indexes, storing them as pairs so we can sort them by
   // the row index for proper overlap when rendering.
@@ -498,8 +498,6 @@ GameStateController.prototype.generateTreats = function() {
   indexPairs = indexPairs.sort(function(a,b) {
                                 return a[1] - b[1];
                                });
-
-  indexPairs.forEach(function(item) {console.log('indexPairs', item)});
 
   var treatTypes = ['blue', 'green', 'orange', 'heart'];
 
@@ -619,21 +617,21 @@ GameStateController.prototype.pulseAnimationEndHandler = function(event) {
 };
 
 /** Whether to draw the boundaries of the game pieces. For debugging only. **/
-var showBoundaries = false;
+var SHOW_BOUNDARIES = false;
 
 /** Height of each asset. */
-var assetHeight = 171;
+var ASSET_HEIGHT = 171;
 
 /** Width of each asset. */
-var assetWidth = 101;
+var ASSET_WIDTH = 101;
 
 /** Width of image asset */
-var colWidth = assetWidth;
+var COL_WIDTH = ASSET_WIDTH;
 
 /**
  * Height of image asset. 171px tall image assets, overlap other rows by 88px.
  */
-var rowHeight = 83;
+var ROW_HEIGHT = 83;
 
 /**
  * Offset for the character asset's visual elements.
@@ -641,13 +639,13 @@ var rowHeight = 83;
  * though they're the same dimensions. This offset is used to line up the
  * character so it overlays the tiles correctly.
  */
-var characterVertOffset = -32;
+var CHARACTER_VERT_OFFSET = -32;
 
 /** Width of the canvas. */
-var canvasWidth = 505;
+var CANVAS_WIDTH = 505;
 
 /** Height of the canvas. */
-var canvasHeight = 606;
+var CANVAS_HEIGHT = 606;
 
 /** Instance to store game state. */
 var gameStateController = new GameStateController(3, 200, 100);
@@ -657,7 +655,7 @@ var allEnemies = [];
 gameStateController.generateEnemies();
 
 /** The player instance. */
-var player = new Player(2 * colWidth, 5 * rowHeight + characterVertOffset);
+var player = new Player(2 * COL_WIDTH, 5 * ROW_HEIGHT + CHARACTER_VERT_OFFSET);
 
 /** Array to hold the treats. */
 var allTreats = [];
