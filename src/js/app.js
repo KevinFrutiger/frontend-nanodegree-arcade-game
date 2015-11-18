@@ -484,8 +484,8 @@ GameStateController.prototype.generateTreats = function() {
     var duplicate = false;
 
     // Check if that row-column pair is already in the array.
-    for (var j = 0, len = indexPairs.length; j < len; j++) {
-      if (indexPairs[j][0] == columnsIndex && indexPairs[j][1] == rowsIndex) {
+    for (var i = 0, len = indexPairs.length; i < len; i++) {
+      if (indexPairs[i][0] == columnsIndex && indexPairs[i][1] == rowsIndex) {
         // Flag to continue on without storing this pair.
         duplicate = true;
         break;
@@ -508,7 +508,7 @@ GameStateController.prototype.generateTreats = function() {
   var treatTypes = ['blue', 'green', 'orange', 'heart'];
 
   // Create all the treats.
-  for (i = 0; i < indexPairs.length; i++) {
+  for (var i = 0; i < indexPairs.length; i++) {
     var x = columns[indexPairs[i][0]];
     var y = rows[indexPairs[i][1]];
 
