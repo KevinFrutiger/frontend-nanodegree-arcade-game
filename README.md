@@ -14,13 +14,13 @@ A Web browser.
 
 ### Running the Game
 
-You can run the game <a href="http://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">here</a>).
+You can run the game <a href="http://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">here</a>.
 
 Alternatively, to run the game locally:
 
 1. Download the .zip file using the **Download ZIP** button located in the GitHub sidebar (or clone the repository)
 2. Unzip the file
-3. Point your browser to **index.html in the src folder of the files that you just unzipped
+3. Point your browser to **index.html** in the **src** folder of the files that you just unzipped
 
 ## How to Play
 
