@@ -1,6 +1,6 @@
 # Classic Arcade Game Clone
 
-<a href="http://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">View the live game</a>
+<a href="https://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">View the live game</a>
 
 This was the third project in the _Front-End Web Developer Nanodegree_. The objective was to edit an existing game engine to add player and enemy entities using JavaScript's psuedo-classical object-oriented style.
 
@@ -14,7 +14,7 @@ A Web browser.
 
 ### Running the Game
 
-You can run the game <a href="http://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">here</a>.
+You can run the game <a href="https://kevinfrutiger.github.io/frontend-nanodegree-arcade-game/" target="_blank">here</a>.
 
 Alternatively, to run the game locally:
 
