@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "author": "Kevin Frutiger",
   "devDependencies": {
-    "grunt": "^1.5.2",
+    "grunt": "^1.5.3",
     "grunt-contrib-jshint": "^2.0.0"
   }
 
